@@ -14,6 +14,10 @@ build:
   python_version: "3.10"
 
   # a list of packages in the format <package-name>==<version>
+  # NOTE: Installing pip packages here, in combination with Conda packages installed in the 'run' section, is largely untested.
+  #       It relies on the assumption that the pip packages are compatible with the Python version and the Conda environment.
+  #       Use this feature with caution, as it may lead to unexpected behavior or conflicts.
+  #       If possible, try to install all required packages using Conda in the 'run' section for better reproducibility.
   # python_packages:
   #   - "numpy==1.19.4"
   #   - "torch==1.8.0"
@@ -21,13 +25,11 @@ build:
 
   # commands run after the environment is setup
   run:
-    # Download Miniconda installer
+    # Download and install Miniconda (make sure the Python version matches)
     - curl -O https://repo.anaconda.com/miniconda/Miniconda3-py310_23.3.1-0-Linux-x86_64.sh
-
-    # Install Miniconda silently and set the installation path to /cog/miniconda
     - bash Miniconda3-py310_23.3.1-0-Linux-x86_64.sh -b -p /cog/miniconda
 
-    # Initialize conda for bash
+    # Initialize Conda for bash
     - /cog/miniconda/bin/conda init bash
 
     # Create a new conda environment named 'myenv' with Python 3.10
